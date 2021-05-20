@@ -1,0 +1,41 @@
+<include href="_tpl_header.htm" />
+<h2>Add</h2>
+
+<form action="/websites/add/" method="post">
+ <label for="website_url">URL:</label>
+ <input type="text" id="company" name="website_url" value="{{ @GET.website_url }}"><br><br>
+ <label for="website_url">website_comment:</label>
+ <input type="text" id="company" name="website_comment" value="{{ @GET.website_comment }}"><br><br>
+ <input type="submit" value="Submit">
+</form>
+
+
+<h2>Monitored websites</h2>
+<table border=1>
+  <tr>
+      <th>Website</th>
+      <th>Active</th>
+      <th>Last check</th>
+      <th>Last diff</th>
+      <th>Comment</th>
+      <th>action</th>
+  </tr>
+
+<repeat group="{{ @result }}" value="{{ @item }}">
+    <tr>
+      <td>{{ @item.website_url  }}</td>
+      <td>{{ @item.website_active  }}</td>
+      <td>{{ @item.lastcheck  }}</td>
+      <td>{{ @item.lastdiff  }}</td>
+      <td>{{ @item.website_comment  }}</td>
+      <td>
+        [<a href="/websites/switch/{{ @item.website_id  }}"><check if="{{ @item.website_active=='1' }}">de-</check>activate</a>]
+        [<a href="/websites/check/{{ @item.website_id  }}">check</a>]
+        [<a href="/websites/delete/{{ @item.website_id  }}" onclick="return confirm('Are you sure you want to delete {{ @item.website_id  }}?')">delete</a>]
+
+      </td>
+    </tr>
+</repeat>
+</table>
+
+<include href="_tpl_footer.htm" />
