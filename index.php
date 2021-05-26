@@ -9,8 +9,9 @@ $f3->set('DB', new DB\SQL('sqlite:./db/websitechangetracker.sqlite3'));
 
 $f3->route('GET /',
 	function($f3) {
-		$f3->set('content','start.htm');
-		echo View::instance()->render('layout.htm');
+		//$f3->set('content','start.htm');
+		//echo View::instance()->render('layout.htm');
+		$f3->reroute('/websites');		
 	}
 );
 
