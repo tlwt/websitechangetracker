@@ -1,17 +1,18 @@
 <?php
+
 // Kickstart the framework
 $f3=require('lib/base.php');
 
 $f3->config('config.ini');
 
-$f3->set('DB', new DB\SQL('sqlite:./db/websitechangetracker.sqlite3'));
-
+$f3->set('DB', new DB\SQL($f3->get('dbUrl')));
+$f3->set('gmnow', gmdate("Y-m-d H:i:s"));
 
 $f3->route('GET /',
 	function($f3) {
 		//$f3->set('content','start.htm');
 		//echo View::instance()->render('layout.htm');
-		$f3->reroute('/websites');		
+		$f3->reroute('/websites');
 	}
 );
 
@@ -23,6 +24,7 @@ $f3->route('GET /',
 $f3->route('GET /websites',
 	function($f3) {
 		$db = $f3->get('DB');
+
 
 		$f3->set('result',$db->exec("SELECT w.*,
 			case WHEN length(website_url) > 80 THEN substr(website_url,0,40) || '...' || substr(website_url,length(website_url)-40,40)
@@ -147,7 +149,7 @@ $f3->route('GET /websites/check/@id',
 function checkwebsite($id) {
 		global $f3;
 		$db = $f3->get('DB');
-		$now = date("Y-m-d h:i:s");
+
 
 		$website=new DB\SQL\Mapper($db,'websites');
 		$oldlog=new DB\SQL\Mapper($db,'logs');
@@ -156,7 +158,6 @@ function checkwebsite($id) {
 
 		$website->load(array('website_id=:id',array(':id' => $id)));
 		$oldlog->load(array('log_website_id=:id ORDER BY log_id DESC LIMIT 0,1',array(':id' => $id)));
-
 
 		// getting website content
 		$content = file_get_contents($website->website_url);
@@ -172,7 +173,7 @@ function checkwebsite($id) {
 				$newlog->log_website_id = $id;
 				$newlog->log_diff = $diff;
 				$newlog->log_content=$content;
-				$newlog->log_datetime=$now;
+				$newlog->log_datetime=$f3->get('gmnow');
 				$newlog->log_diff = html_entity_decode($delta);
 				$newlog->save();
 
@@ -189,7 +190,7 @@ function checkwebsite($id) {
 				}
 			}
 
-		$website->website_last_check = $now;
+		$website->website_last_check = $f3->get('gmnow');
 		$website->save();
 
 	}
