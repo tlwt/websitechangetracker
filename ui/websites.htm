@@ -1,10 +1,11 @@
 <include href="_tpl_header.htm" />
 
-<h2>Add {{ @datetime }}</h2>
+<h2>Add</h2>
+<small>Now: {{ @gmnow }}</small>
 <form action="/websites/add/" method="post">
  <label for="website_url">URL:</label>
  <input type="text" id="company" name="website_url" value="{{ @GET.website_url }}"><br><br>
- <label for="website_url">website_comment:</label>
+ <label for="website_url">Comment:</label>
  <input type="text" id="company" name="website_comment" value="{{ @GET.website_comment }}"><br><br>
  <input type="submit" value="Submit">
 </form>
