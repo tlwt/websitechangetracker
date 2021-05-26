@@ -11,6 +11,7 @@
 
 
 <h2>Monitored websites</h2>
+<a href="/websites/checkall">check all websites now</a>
 <table border=1>
   <tr>
       <th>Website</th>
@@ -23,7 +24,7 @@
 
 <repeat group="{{ @result }}" value="{{ @item }}">
     <tr>
-      <td>{{ @item.website_url  }}</td>
+      <td><a href="/websites/view/{{ @item.website_id  }}">{{ @item.website_shorturl  }}</a> [<a href="{{ @item.website_url  }}" target="_blank">www</a>]</td>
       <td>{{ @item.website_active  }}</td>
       <td>{{ @item.lastcheck  }}</td>
       <td>{{ @item.lastdiff  }}</td>

@@ -1,0 +1,16 @@
+<include href="_tpl_header.htm" />
+
+<h2>Monitored websites</h2>
+<a href="/websites">back to overview</a>
+
+<ul>
+<li>ID: {{ @websites.website_id  }}
+<li>URL: {{ @websites.website_url  }}
+  <li>last check: {{ @websites.website_last_check  }}
+</ul>
+
+<h3>Changes:</h3>
+
+<iframe src="/websites/showchanges/{{ @websites.website_id  }}" width="900" height="400" name="Changes" />
+
+<include href="_tpl_footer.htm" />
