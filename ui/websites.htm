@@ -27,7 +27,7 @@
     <tr>
       <td><a href="/websites/view/{{ @item.website_id  }}">{{ @item.website_shorturl  }}</a> [<a href="{{ @item.website_url  }}" target="_blank">www</a>]</td>
       <td>{{ @item.website_active  }}</td>
-      <td>{{ @item.lastcheck  }}</td>
+      <td>{{ @item.website_last_check }} ({{ @item.lastcheck  }})</td>
       <td>{{ @item.lastdiff  }}</td>
       <td>{{ @item.website_comment  }}</td>
       <td>
